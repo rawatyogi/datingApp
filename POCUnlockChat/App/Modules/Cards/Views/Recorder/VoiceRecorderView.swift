@@ -18,13 +18,15 @@ struct VoiceRecorderView: View {
     @State private var isSubmitted = false
     @State private var isPlaying = false
     @State private var showSubmissionAlert = false
+    @State private var canStopRecording = false
     
     @State private var recordingDuration = 0.0
     @State private var playerDuration = 0.0
     @State private var timer: Timer? = nil
     @State private var waveformTimer: Timer? = nil
     @State private var waveformLevel: CGFloat = 0.0
-    
+    @State private var isRecordingCompleted = false
+
     var selectedCard: CardsModel
     
     var body: some View {
@@ -80,10 +82,30 @@ struct VoiceRecorderView: View {
             }
             .onAppear {
                 self.userPhotos = self.selectedCard.uplaodedImages
+                viewModel.onRecordingFinished = {
+//                        DispatchQueue.main.async {
+//                            stopWaveformAnimation()
+//                            isRecording = false
+//                            isRecordingCompleted = true
+//                            isPlaying = false
+//                        }
+                    }
+            }
+            .onReceive(viewModel.$didFinishMaxRecording) { finished in
+                if finished {
+                 
+                    viewModel.didFinishMaxRecording = false
+                    stopWaveformAnimation()
+                    isRecording = false
+                    isRecordingCompleted = true
+                    isPlaying = false
+                }
             }
         }
         .alert("Your recording submitted successfully!", isPresented: $showSubmissionAlert) {
-            Button("OK", role: .cancel) { }
+            Button("OK", role: .cancel) {
+                presentationMode.wrappedValue.dismiss()
+            }
         }
         .ignoresSafeArea()
         .toolbar(.hidden, for: .tabBar)
@@ -93,7 +115,10 @@ struct VoiceRecorderView: View {
     // MARK: Header View
     func headerView(geo: GeometryProxy) -> some View {
         HStack {
-            Button(action: { presentationMode.wrappedValue.dismiss() }) {
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+                cleanupAudioSession()
+            }) {
                 Image(systemName: "chevron.left")
                     .font(.title2)
                     .foregroundColor(.white)
@@ -202,6 +227,7 @@ struct VoiceRecorderView: View {
     func audioControls(geo: GeometryProxy) -> some View {
         HStack(spacing: geo.size.width * 0.12) {
             Button("Delete") {
+                cleanupAudioSession()
                 presentationMode.wrappedValue.dismiss()
                 viewModel.stopRecording()
             }
@@ -212,22 +238,29 @@ struct VoiceRecorderView: View {
             
             ZStack {
                 if !self.isPlaying && !self.isSubmitted {
-                    RecordingProgressView(progress: min(viewModel.elapsedTime / 300, 1.0), geo: geo)
+                    if viewModel.elapsedTime < viewModel.recorder.minDuration {
+                        RecordingProgressView(progress: min(viewModel.elapsedTime / viewModel.recorder.minDuration, 1.0), geo: geo)
+                    }
                 }
                 
                 Button {
                     if isSubmitted {
-                        startPlayer()
-                    } else {
-                        if isRecording {
-                            viewModel.stopRecording()
-                            isRecording = false
-                        } else {
-                            viewModel.startRecording()
-                            isRecording = true
-                            startRecording()
-                        }
-                    }
+                           startPlayer()
+                       } else if isRecording {
+                           if canStopRecording {
+                               viewModel.stopRecording()
+                               stopRecording()
+                               isRecording = false
+                               isRecordingCompleted = true
+                           }
+                       } else if isRecordingCompleted {
+                           startPlayer()
+                       } else {
+                           viewModel.startRecording()
+                           isRecording = true
+                           isRecordingCompleted = false
+                           startRecording()
+                       }
 
                 } label: {
                     Image(iconName())
@@ -237,11 +270,13 @@ struct VoiceRecorderView: View {
                         .clipShape(Circle())
                         .foregroundColor(.white)
                 }
+                .disabled(isRecording && !canStopRecording)
+                .opacity(isRecording && !canStopRecording ? 0.5 : 1)
             }
             
             
             Button("Submit") {
-                submitRecording()
+                 submitRecording()
             }
 
             .font(.body)
@@ -254,6 +289,7 @@ struct VoiceRecorderView: View {
     // MARK: Unmatch Button
     var unmatchButton: some View {
         Button("Unmatch") {
+            cleanupAudioSession()
             presentationMode.wrappedValue.dismiss()
         }
         .font(.body)
@@ -265,11 +301,15 @@ struct VoiceRecorderView: View {
 
 extension VoiceRecorderView {
     func iconName() -> String {
-        if !isSubmitted {
-            return isRecording ? "recording-stop" : "audio-record"
-        } else {
-            return isPlaying ? "audio-pause" : "audio-play"
-        }
+        if isSubmitted {
+              return isPlaying ? "audio-pause" : "audio-play"
+          } else if isRecording {
+              return "recording-stop"
+          } else if isRecordingCompleted {
+              return isPlaying ? "audio-pause" : "audio-play"
+          } else {
+              return "audio-record"
+          }
     }
     
     func getAudioFileURL() -> URL? {
@@ -278,6 +318,7 @@ extension VoiceRecorderView {
     }
     
     func startRecording() {
+        isRecordingCompleted = false
         isRecording = true
         startRecordingTimer()
         startWaveformAnimation()
@@ -291,22 +332,24 @@ extension VoiceRecorderView {
     
     func submitRecording() {
         
-        viewModel.resetWaveform()
-        stopRecording()
-        stopWaveformAnimation()
-        stopPlayerTimer()
-        stopRecordingTimer()
-
-        playerDuration = 0
-        recordingDuration = 0
-        isPlaying = false
-        waveformLevel = 0.0
-
-        viewModel.stopRecording()
-        viewModel.elapsedTime = 0
-        viewModel.audioLevel = 0.0
-
-        isSubmitted = true
+        cleanupAudioSession()
+        
+//        viewModel.resetWaveform()
+//        stopRecording()
+//        stopWaveformAnimation()
+//        stopPlayerTimer()
+//        stopRecordingTimer()
+//
+//        playerDuration = 0
+//        recordingDuration = 0
+//        isPlaying = false
+//        waveformLevel = 0.0
+//
+//        viewModel.stopRecording()
+//        viewModel.elapsedTime = 0
+//        viewModel.audioLevel = 0.0
+//
+//        isSubmitted = true
         showSubmissionAlert = true
     }
 
@@ -347,8 +390,12 @@ extension VoiceRecorderView {
     func startRecordingTimer() {
         timer?.invalidate()
         recordingDuration = 0
+        canStopRecording = false
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             recordingDuration += 1
+            if recordingDuration >= viewModel.recorder.minDuration {
+                 canStopRecording = true
+            }
         }
     }
     
@@ -398,6 +445,17 @@ extension VoiceRecorderView {
         waveformLevel = 0.0
     }
     
+    func cleanupAudioSession() {
+        stopRecording()
+        stopPlayerTimer()
+        stopWaveformAnimation()
+        viewModel.stopRecording()
+        audioPlayerManager.stopAudio()
+        isRecording = false
+        isPlaying = false
+        viewModel.recorder.stopRecording()
+    }
+
 }
 
 #Preview {

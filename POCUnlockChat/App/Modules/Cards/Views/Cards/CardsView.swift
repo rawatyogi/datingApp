@@ -31,7 +31,7 @@ struct CardsView: View {
                         cardsHeaderView
                             .padding(.horizontal, 15)
                         cardsCollectionsView
-                            .padding(.top, 30)
+                            .padding(.top, 20)
                             .padding(.leading, 5)
                         chatTabsView
                             .padding(.top, 12)
@@ -90,7 +90,7 @@ struct CardsView: View {
                 .fill(.red)
                 .frame(width: 55.0, height: 55.0)
             
-            Image("sansa")
+            Image("robb")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 45.0, height: 45.0)
@@ -109,7 +109,6 @@ struct CardsView: View {
                 .padding(.top, 50)
         }
     }
-    
     
     //MARK: CARDS HORIZONTAL LIST
     var cardsCollectionsView: some View {
@@ -132,7 +131,6 @@ struct CardsView: View {
         }
     }
 
-    
     //MARK: DEMO VIEW AT BOTTOM
     var rectangleView: some View {
         ZStack {
@@ -143,7 +141,6 @@ struct CardsView: View {
                 .frame(height: 370)
         }
     }
-    
     
     //MARK: CHAT AND PENDING TABS
     var chatTabsView: some View {
@@ -165,7 +162,6 @@ struct CardsView: View {
             Spacer()
         }
     }
-
     
     func chatTab(title: String, isSelected: Bool, animate: Bool) -> some View {
         

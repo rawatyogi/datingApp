@@ -20,12 +20,14 @@ class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
     @Published var elapsedTime: TimeInterval = 0
     @Published var recordingSuccess: Bool = false
     @Published var audioLevel: Float = 0.0
+    @Published var didFinishMaxRecording = false
     
     private var cancellable: AnyCancellable?
     
-    let maxDuration: TimeInterval = 3 * 60
-    let minDuration: TimeInterval = 5
-    
+    let maxDuration: TimeInterval = 1 * 60
+    let minDuration: TimeInterval = 15
+    var onRecordingFinished: (() -> Void)?
+
     func startAudioRecording() {
         stopRecording()
         do {
@@ -73,6 +75,7 @@ class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
                 }
 
                 if self.elapsedTime >= self.maxDuration {
+                    self.didFinishMaxRecording = true
                     self.stopRecording()
                 }
             }
@@ -81,6 +84,7 @@ class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
     
     func stopRecording() {
         audioRecorder?.stop()
+        onRecordingFinished?()
         print("Audio file saved at: \(audioRecorder?.url)")
         print("File exists: \(FileManager.default.fileExists(atPath: audioRecorder?.url.path.description ?? ""))")
 
@@ -93,7 +97,10 @@ extension AudioRecorderLayer {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         print(flag ? "Audio recorded successfully" : "Recording failed")
         recordingSuccess = flag
-
+        if flag {
+           // onRecordingFinished?()
+            didFinishMaxRecording = true
+        }
         guard let url = recordedURL else { return }
 
         let fileSize = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
