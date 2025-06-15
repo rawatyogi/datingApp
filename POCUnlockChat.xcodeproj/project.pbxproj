@@ -1,0 +1,580 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		C5DCFE6D2DFB2ACD00D781CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5DCFE542DFB2ACC00D781CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C5DCFE5B2DFB2ACC00D781CF;
+			remoteInfo = POCUnlockChat;
+		};
+		C5DCFE772DFB2ACD00D781CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5DCFE542DFB2ACC00D781CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C5DCFE5B2DFB2ACC00D781CF;
+			remoteInfo = POCUnlockChat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C5DCFE5C2DFB2ACC00D781CF /* POCUnlockChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POCUnlockChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5DCFE6C2DFB2ACD00D781CF /* POCUnlockChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = POCUnlockChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5DCFE762DFB2ACD00D781CF /* POCUnlockChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = POCUnlockChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C5E4709A2DFDD0E000FEE378 /* Exceptions for "POCUnlockChat" folder in "POCUnlockChat" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C5DCFE5B2DFB2ACC00D781CF /* POCUnlockChat */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C5DCFE5E2DFB2ACC00D781CF /* POCUnlockChat */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C5E4709A2DFDD0E000FEE378 /* Exceptions for "POCUnlockChat" folder in "POCUnlockChat" target */,
+			);
+			path = POCUnlockChat;
+			sourceTree = "<group>";
+		};
+		C5DCFE6F2DFB2ACD00D781CF /* POCUnlockChatTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = POCUnlockChatTests;
+			sourceTree = "<group>";
+		};
+		C5DCFE792DFB2ACD00D781CF /* POCUnlockChatUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = POCUnlockChatUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C5DCFE592DFB2ACC00D781CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5DCFE692DFB2ACD00D781CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5DCFE732DFB2ACD00D781CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C5DCFE532DFB2ACC00D781CF = {
+			isa = PBXGroup;
+			children = (
+				C5DCFE5E2DFB2ACC00D781CF /* POCUnlockChat */,
+				C5DCFE6F2DFB2ACD00D781CF /* POCUnlockChatTests */,
+				C5DCFE792DFB2ACD00D781CF /* POCUnlockChatUITests */,
+				C5DCFE5D2DFB2ACC00D781CF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C5DCFE5D2DFB2ACC00D781CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C5DCFE5C2DFB2ACC00D781CF /* POCUnlockChat.app */,
+				C5DCFE6C2DFB2ACD00D781CF /* POCUnlockChatTests.xctest */,
+				C5DCFE762DFB2ACD00D781CF /* POCUnlockChatUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C5DCFE5B2DFB2ACC00D781CF /* POCUnlockChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5DCFE802DFB2ACD00D781CF /* Build configuration list for PBXNativeTarget "POCUnlockChat" */;
+			buildPhases = (
+				C5DCFE582DFB2ACC00D781CF /* Sources */,
+				C5DCFE592DFB2ACC00D781CF /* Frameworks */,
+				C5DCFE5A2DFB2ACC00D781CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C5DCFE5E2DFB2ACC00D781CF /* POCUnlockChat */,
+			);
+			name = POCUnlockChat;
+			packageProductDependencies = (
+			);
+			productName = POCUnlockChat;
+			productReference = C5DCFE5C2DFB2ACC00D781CF /* POCUnlockChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C5DCFE6B2DFB2ACD00D781CF /* POCUnlockChatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5DCFE832DFB2ACD00D781CF /* Build configuration list for PBXNativeTarget "POCUnlockChatTests" */;
+			buildPhases = (
+				C5DCFE682DFB2ACD00D781CF /* Sources */,
+				C5DCFE692DFB2ACD00D781CF /* Frameworks */,
+				C5DCFE6A2DFB2ACD00D781CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C5DCFE6E2DFB2ACD00D781CF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C5DCFE6F2DFB2ACD00D781CF /* POCUnlockChatTests */,
+			);
+			name = POCUnlockChatTests;
+			packageProductDependencies = (
+			);
+			productName = POCUnlockChatTests;
+			productReference = C5DCFE6C2DFB2ACD00D781CF /* POCUnlockChatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C5DCFE752DFB2ACD00D781CF /* POCUnlockChatUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5DCFE862DFB2ACD00D781CF /* Build configuration list for PBXNativeTarget "POCUnlockChatUITests" */;
+			buildPhases = (
+				C5DCFE722DFB2ACD00D781CF /* Sources */,
+				C5DCFE732DFB2ACD00D781CF /* Frameworks */,
+				C5DCFE742DFB2ACD00D781CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C5DCFE782DFB2ACD00D781CF /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C5DCFE792DFB2ACD00D781CF /* POCUnlockChatUITests */,
+			);
+			name = POCUnlockChatUITests;
+			packageProductDependencies = (
+			);
+			productName = POCUnlockChatUITests;
+			productReference = C5DCFE762DFB2ACD00D781CF /* POCUnlockChatUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C5DCFE542DFB2ACC00D781CF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					C5DCFE5B2DFB2ACC00D781CF = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					C5DCFE6B2DFB2ACD00D781CF = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = C5DCFE5B2DFB2ACC00D781CF;
+					};
+					C5DCFE752DFB2ACD00D781CF = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = C5DCFE5B2DFB2ACC00D781CF;
+					};
+				};
+			};
+			buildConfigurationList = C5DCFE572DFB2ACC00D781CF /* Build configuration list for PBXProject "POCUnlockChat" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C5DCFE532DFB2ACC00D781CF;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C5DCFE5D2DFB2ACC00D781CF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C5DCFE5B2DFB2ACC00D781CF /* POCUnlockChat */,
+				C5DCFE6B2DFB2ACD00D781CF /* POCUnlockChatTests */,
+				C5DCFE752DFB2ACD00D781CF /* POCUnlockChatUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C5DCFE5A2DFB2ACC00D781CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5DCFE6A2DFB2ACD00D781CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5DCFE742DFB2ACD00D781CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C5DCFE582DFB2ACC00D781CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5DCFE682DFB2ACD00D781CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5DCFE722DFB2ACD00D781CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C5DCFE6E2DFB2ACD00D781CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C5DCFE5B2DFB2ACC00D781CF /* POCUnlockChat */;
+			targetProxy = C5DCFE6D2DFB2ACD00D781CF /* PBXContainerItemProxy */;
+		};
+		C5DCFE782DFB2ACD00D781CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C5DCFE5B2DFB2ACC00D781CF /* POCUnlockChat */;
+			targetProxy = C5DCFE772DFB2ACD00D781CF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C5DCFE7E2DFB2ACD00D781CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C5DCFE7F2DFB2ACD00D781CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C5DCFE812DFB2ACD00D781CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"POCUnlockChat/Preview Content\"";
+				DEVELOPMENT_TEAM = 384WD3V575;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = POCUnlockChat/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "his app needs access to your microphone to record audio.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = AppLaunchView;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asc.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C5DCFE822DFB2ACD00D781CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"POCUnlockChat/Preview Content\"";
+				DEVELOPMENT_TEAM = 384WD3V575;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = POCUnlockChat/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "his app needs access to your microphone to record audio.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = AppLaunchView;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asc.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C5DCFE842DFB2ACD00D781CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Storytime.ai.POCUnlockChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/POCUnlockChat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/POCUnlockChat";
+			};
+			name = Debug;
+		};
+		C5DCFE852DFB2ACD00D781CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Storytime.ai.POCUnlockChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/POCUnlockChat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/POCUnlockChat";
+			};
+			name = Release;
+		};
+		C5DCFE872DFB2ACD00D781CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Storytime.ai.POCUnlockChatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = POCUnlockChat;
+			};
+			name = Debug;
+		};
+		C5DCFE882DFB2ACD00D781CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Storytime.ai.POCUnlockChatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = POCUnlockChat;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C5DCFE572DFB2ACC00D781CF /* Build configuration list for PBXProject "POCUnlockChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5DCFE7E2DFB2ACD00D781CF /* Debug */,
+				C5DCFE7F2DFB2ACD00D781CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5DCFE802DFB2ACD00D781CF /* Build configuration list for PBXNativeTarget "POCUnlockChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5DCFE812DFB2ACD00D781CF /* Debug */,
+				C5DCFE822DFB2ACD00D781CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5DCFE832DFB2ACD00D781CF /* Build configuration list for PBXNativeTarget "POCUnlockChatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5DCFE842DFB2ACD00D781CF /* Debug */,
+				C5DCFE852DFB2ACD00D781CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5DCFE862DFB2ACD00D781CF /* Build configuration list for PBXNativeTarget "POCUnlockChatUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5DCFE872DFB2ACD00D781CF /* Debug */,
+				C5DCFE882DFB2ACD00D781CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C5DCFE542DFB2ACC00D781CF /* Project object */;
+}
