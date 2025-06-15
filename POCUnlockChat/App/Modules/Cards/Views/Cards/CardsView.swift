@@ -2,7 +2,7 @@
 //  CardsView.swift
 //  POCUnlockChat
 //
-//  Created by Yogi Rawat on 12/06/25.
+//  Created by Anuj Garg on 12/06/25.
 //
 
 import SwiftUI
@@ -17,7 +17,11 @@ struct CardsView: View {
     @State private var isChatsAnimating = false
     @State private var isPendingAnimating = false
 
-    @StateObject private var viewModel = ChatsViewModel()
+    @StateObject private var viewModel : ChatsViewModel
+ 
+    init(viewModel: ChatsViewModel = ChatsViewModel()) {
+            _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         
@@ -26,18 +30,23 @@ struct CardsView: View {
             ZStack {
                 Color.init(hex: "#0A0B0D")
                     .ignoresSafeArea()
+                
                 ScrollView {
-                    VStack{
-                        cardsHeaderView
+                    
+                    VStack {
+                        CardsHeaderView(name: viewModel.cards.first?.name ?? "", photo: viewModel.cards.first?.imageURL ?? "", count: 5)
                             .padding(.horizontal, 15)
-                        cardsCollectionsView
-                            .padding(.top, 20)
+                            .padding(.top, 30)
+                        
+                        CardsCollectionView(cards: viewModel.cards, initialAppear: self.$initialAppear)
                             .padding(.leading, 5)
+                            .padding(.top, 18)
+                        
                         chatTabsView
-                            .padding(.top, 12)
+                            .padding(.top, 10)
                             .padding(.horizontal, 15)
-                        rectangleView
-                            .padding(.top, 0)
+                        
+                        RectangleView()
                             .padding(.horizontal, 0)
                     }
                     .toolbar(.hidden)
@@ -48,100 +57,7 @@ struct CardsView: View {
             viewModel.fetchCardsData()
         }
     }
-    
-    //MARK: HEADER VIEW
-    var cardsHeaderView: some View {
-        VStack(alignment: .leading, spacing: -10) {
-            HStack(spacing: 20) {
-                Text("Yogendra")
-                    .foregroundStyle(.white)
-                    .font(.largeTitle.bold())
-                    .multilineTextAlignment(.leading)
-                yourTurnCountView
-                Spacer()
-                VStack(alignment: .trailing) {
-                    profileView
-                }
-            }
-            Text("Make You move, they are waiting")
-                .foregroundStyle(.white.opacity(0.7))
-                .font(.system(size: 15.0).italic())
-                .multilineTextAlignment(.leading)
-        }
-    }
-    
-    //MARK: COUNT VIEW
-    var yourTurnCountView: some View {
-        ZStack {
-            Circle()
-                .fill(Color(hex: "#CFCFFE"))
-                .frame(width: 25.0, height: 25.0)
-            Text("7")
-                .foregroundStyle(.black)
-                .font(.headline)
-                .multilineTextAlignment(.center)
-        }
-    }
-    
-    //MARK: PROFILE VIEW
-    var profileView: some View {
-        ZStack {
-            Circle()
-                .fill(.red)
-                .frame(width: 55.0, height: 55.0)
-            
-            Image("robb")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 45.0, height: 45.0)
-                .cornerRadius(18)
-            
-            Rectangle()
-                .fill(Color(hex: "#12161F"))
-                .frame(width: 55.0, height: 25.0)
-                .cornerRadius(12)
-                .padding(.top, 50)
-            
-            Text("7")
-                .foregroundStyle(.white.opacity(0.7))
-                .font(.headline)
-                .multilineTextAlignment(.leading)
-                .padding(.top, 50)
-        }
-    }
-    
-    //MARK: CARDS HORIZONTAL LIST
-    var cardsCollectionsView: some View {
-        ScrollView(.horizontal) {
-            LazyHStack(spacing: 8) {
-                ForEach(Array(viewModel.cards.enumerated()), id: \.element) { index, data in
-                    NavigationLink(destination: VoiceRecorderView(selectedCard: data)) {
-                        UserPhotoView(selectedIndex: index, initialAppear: self.initialAppear, data: data)
-                    }
-                }
-            }
-            .padding(.leading, 20)
-        }
-        .coordinateSpace(name: "scroll")
-        .scrollIndicators(.hidden)
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                initialAppear = true
-            }
-        }
-    }
 
-    //MARK: DEMO VIEW AT BOTTOM
-    var rectangleView: some View {
-        ZStack {
-            Rectangle()
-                .fill(Color(hex: "#D9D9D9"))
-                .cornerRadius(12)
-                .padding(.bottom, 0)
-                .frame(height: 370)
-        }
-    }
-    
     //MARK: CHAT AND PENDING TABS
     var chatTabsView: some View {
         HStack(spacing: 12) {
@@ -162,7 +78,8 @@ struct CardsView: View {
             Spacer()
         }
     }
-    
+
+    //MARK: TABS CHAT AND PENDING
     func chatTab(title: String, isSelected: Bool, animate: Bool) -> some View {
         
         VStack(spacing: 5) {
@@ -193,6 +110,151 @@ struct CardsView: View {
     }
 }
 
+//MARK: HEADER VIEW
+struct CardsHeaderView: View {
+    let name: String
+    let photo: String
+    let count: Int
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 20) {
+                Text(name)
+                    .foregroundStyle(.white)
+                    .font(.largeTitle.bold())
+                    .multilineTextAlignment(.leading)
+                CountView(count: 5)
+                Spacer()
+                VStack(alignment: .trailing) {
+                    CardProfileView(name: name, photo: photo, count: count)
+                }
+            }
+            Text("Make You move, they are waiting")
+                .foregroundStyle(.white.opacity(0.7))
+                .font(.system(size: 15.0).italic())
+                .multilineTextAlignment(.leading)
+        }
+    }
+}
+
+
+//MARK: COUNT VIEW
+struct CountView: View {
+    let count: Int
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(Color(hex: "#CFCFFE"))
+                .frame(width: 25.0, height: 25.0)
+            Text("\(count)")
+                .foregroundStyle(.black)
+                .font(.headline)
+                .multilineTextAlignment(.center)
+        }
+    }
+}
+
+//MARK: PROFILE VIEW
+struct UserProfileView : View {
+    
+    let count: Int
+    var profilePicture: String
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(.red)
+                .frame(width: 55.0, height: 55.0)
+            
+            Image(profilePicture)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 45.0, height: 45.0)
+                .cornerRadius(18)
+            
+            Rectangle()
+                .fill(Color(hex: "#12161F"))
+                .frame(width: 55.0, height: 25.0)
+                .cornerRadius(12)
+                .padding(.top, 50)
+            
+            Text("\(count)")
+                .foregroundStyle(.white.opacity(0.7))
+                .font(.headline)
+                .multilineTextAlignment(.leading)
+                .padding(.top, 50)
+        }
+    }
+}
+
+//MARK: CARDS STACK
+struct CardsCollectionView : View {
+    let cards: [CardsModel]
+    @Binding var initialAppear: Bool
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(spacing: 8) {
+                ForEach(Array(cards.enumerated()), id: \.element) { index, card in
+                    NavigationLink(destination: VoiceRecorderView(selectedCard: card)) {
+                        UserPhotoView(selectedIndex: index, initialAppear: initialAppear, data: card)
+                    }
+                }
+            }
+            .padding(.horizontal, 0)
+        }
+        .coordinateSpace(name: "scroll")
+        .scrollIndicators(.hidden)
+        .onAppear {
+            initialAppear = true
+        }
+    }
+}
+
+// MARK: REACTANGLE
+struct RectangleView: View {
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(Color(hex: "#D9D9D9"))
+                .cornerRadius(12)
+                .frame(height: 370)
+        }
+    }
+}
+
+struct CardProfileView : View {
+    var name : String
+    var photo: String
+    var count : Int
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(.red)
+                .frame(width: 55.0, height: 55.0)
+            
+            Image(photo)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 45.0, height: 45.0)
+                .cornerRadius(18)
+            
+            Rectangle()
+                .fill(Color(hex: "#12161F"))
+                .frame(width: 55.0, height: 25.0)
+                .cornerRadius(12)
+                .padding(.top, 50)
+            
+            Text("\(count)")
+                .foregroundStyle(.white.opacity(0.7))
+                .font(.headline)
+                .multilineTextAlignment(.leading)
+                .padding(.top, 50)
+        }
+    }
+}
+
+
 #Preview {
     CardsView()
 }
+

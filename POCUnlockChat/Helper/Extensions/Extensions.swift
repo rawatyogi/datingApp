@@ -2,7 +2,7 @@
 //  Extensions.swift
 //  POCUnlockChat
 //
-//  Created by Yogi Rawat on 13/06/25.
+//  Created by Anuj Garg on 13/06/25.
 //
 
 import SwiftUI

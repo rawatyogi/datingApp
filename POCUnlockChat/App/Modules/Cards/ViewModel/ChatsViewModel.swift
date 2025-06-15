@@ -2,7 +2,7 @@
 //  ChatsViewModel.swift
 //  POCUnlockChat
 //
-//  Created by Yogi Rawat on 14/06/25.
+//  Created by Anuj Garg on 14/06/25.
 //
 
 import Foundation
@@ -12,6 +12,7 @@ class ChatsViewModel: ObservableObject {
     @Published var cards: [CardsModel] = []
     
     func fetchCardsData() {
+        
         if let url = Bundle.main.url(forResource: "CardsData", withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)

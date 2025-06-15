@@ -2,7 +2,7 @@
 //  AudioRecorderLayer.swift
 //  POCUnlockChat
 //
-//  Created by Yogi Rawat on 14/06/25.
+//  Created by Anuj Garg on 14/06/25.
 //
 
 import Foundation
@@ -57,7 +57,7 @@ class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
             isRecording = true
             startTimer()
         } catch {
-            print("Recording failed: \(error.localizedDescription)")
+            print("Recording failed2: \(error.localizedDescription)")
         }
     }
     
@@ -95,7 +95,7 @@ class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
 
 extension AudioRecorderLayer {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        print(flag ? "Audio recorded successfully" : "Recording failed")
+        print(flag ? "Audio recorded successfully" : "Recording failed1")
         recordingSuccess = flag
         if flag {
            // onRecordingFinished?()
@@ -110,9 +110,12 @@ extension AudioRecorderLayer {
             try? FileManager.default.removeItem(at: url)
             recordedURL = nil
             print("Recording deleted — too short (\(elapsedTime)s)")
+            recordingSuccess = false
         } else {
             print("Recording saved at: \(url)")
+            recordingSuccess = flag
         }
+
     }
 
     func canPlayRecording() -> Bool {

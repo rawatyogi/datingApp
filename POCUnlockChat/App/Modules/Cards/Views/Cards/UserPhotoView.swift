@@ -2,7 +2,7 @@
 //  UserPhotoView.swift
 //  POCUnlockChat
 //
-//  Created by Yogi Rawat on 15/06/25.
+//  Created by Anuj Garg on 15/06/25.
 //
 
 import SwiftUI
@@ -67,7 +67,7 @@ struct UserPhotoView: View {
             }
             .scaleEffect(shouldAnimate ? 1 : 0.9)
             .opacity(shouldAnimate ? 1 : 0.6)
-            .animation(.easeOut(duration: 0.6), value: shouldAnimate)
+            .animation(.easeOut(duration: 0.45), value: shouldAnimate)
         }
         .frame(width: 155, height: 205)
     }
