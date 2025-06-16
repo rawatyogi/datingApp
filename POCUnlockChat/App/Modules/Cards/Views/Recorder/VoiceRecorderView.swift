@@ -13,7 +13,7 @@ struct VoiceRecorderView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel = VoiceRecorderViewModel()
     @StateObject private var audioPlayerManager = AudioPlayerManager()
-    
+   
     @State private var isSubmitted = false
     @State private var showSubmissionAlert = false
     var selectedCard: CardsModel
@@ -45,16 +45,6 @@ struct VoiceRecorderView: View {
             .onAppear {
                 self.userPhotos = self.selectedCard.uplaodedImages
             }
-//            .onReceive(viewModel.$didFinishMaxRecording) { finished in
-//                if finished {
-//                 
-//                    viewModel.didFinishMaxRecording = false
-//                    stopWaveformAnimation()
-//                    isRecording = false
-//                    isRecordingCompleted = true
-//                    isPlaying = false
-//                }
-//            }
         }
         .alert("Your recording submitted successfully!", isPresented: $showSubmissionAlert) {
             Button("OK", role: .cancel) {
@@ -126,11 +116,11 @@ struct VoiceRecorderView: View {
                         debugPrint("Recording finished")
                         
                     case .playing:
-                        viewModel.stopPlayback()
-                        debugPrint("Stop Playback")
+                        viewModel.pausePlayback()
+                        debugPrint("Pause Playback")
                         
                     case .paused:
-                        viewModel.startPlayback()
+                        viewModel.resumePlayback()
                         debugPrint("Playback pauesd")
                         
                     case .playbackFinished:
@@ -157,9 +147,9 @@ struct VoiceRecorderView: View {
                 showSubmissionAlert = true
             }
             .font(.body)
-            .foregroundColor(viewModel.elapsedTime >= viewModel.recorder.minDuration ? .white : Color(hex: "#5C6770"))
+            .foregroundColor(viewModel.canStopRecording ? .white : Color(hex: "#5C6770"))
             .frame(height: 40.0)
-            .disabled(viewModel.elapsedTime < viewModel.recorder.minDuration || isSubmitted || viewModel.isPlaying)
+            .disabled(!viewModel.canStopRecording)
             
         }
     }

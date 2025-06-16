@@ -4,8 +4,8 @@
     "age": "30",
     "name": "John Snow",
     "imageURL": "johnsnow",
-    "question": "Do you regret not taking the throne?",
-    "answer": "“Mine is definitely sneaking the late night snacks”",
+    "question": "Have you seen me in Night Watch?",
+    "answer": "“I don't want to be a king but love to be commandar at wall”",
     "uplaodedImages": ["johnandsword", "johnsnow", "johnsnow2", "johnsnow3", "johnsnow4"]
   },
   {
@@ -13,8 +13,8 @@
     "age": "27",
     "name": "Ygritte",
     "imageURL": "ygrites",
-    "question": "What is there behind the walls?",
-    "answer": "“Mine is definitely sneaking the late night snacks”",
+    "question": "Have you seen north beyond the wall?",
+    "answer": "“We are the protectors there”",
     "uplaodedImages": ["y4", "ygrites", "y2", "y3", "y1"]
   },
   {
@@ -22,8 +22,8 @@
     "age": "28",
     "name": "Sansa Stark",
     "imageURL": "sansa",
-    "question": "How is it to be from being a nervous to nerve breaking queen?",
-    "answer": "“Mine is definitely sneaking the late night snacks”",
+    "question": "I have seen you, Where?",
+    "answer": "“I generally reside in the palace”",
     "uplaodedImages": ["sansa", "s2", "s3", "s4", "s5"]
   },
   {
@@ -31,8 +31,8 @@
     "age": "24",
     "name": "Robb Stark",
     "imageURL": "robb",
-    "question": "Why did you trust Wlader Frey",
-    "answer": "“Mine is definitely sneaking the late night snacks”",
+    "question": "Would you like to come to the north?",
+    "answer": "“Winterfell in north is very interseting place”",
     "uplaodedImages": ["robb", "r2"]
   },
   {
@@ -40,7 +40,7 @@
     "age": "37",
     "name": "Margaeray",
     "imageURL": "margarey",
-    "question": "What's Next?",
+    "question": "What's your favorite late night habits?",
     "answer": "“Mine is definitely sneaking the late night snacks”",
     "uplaodedImages": ["m1", "m2", "m3"]
   }

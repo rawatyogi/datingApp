@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct POCUnlockChatApp: App {
+   
     var body: some Scene {
         WindowGroup {
             ChatTabView()

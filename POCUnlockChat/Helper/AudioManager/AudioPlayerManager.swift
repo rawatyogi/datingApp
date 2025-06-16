@@ -62,6 +62,15 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    func resumeAudio() {
+        guard let player = audioPlayer, !player.isPlaying else { return }
+        player.play()
+        startTimer()
+        DispatchQueue.main.async {
+            self.isPlaying = true
+        }
+    }
+    
     private func startTimer() {
         stopTimer()
       

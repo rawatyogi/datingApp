@@ -117,7 +117,7 @@ struct CardsHeaderView: View {
     let count: Int
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 20) {
+            HStack(spacing: 8) {
                 Text(name)
                     .foregroundStyle(.white)
                     .font(.largeTitle.bold())

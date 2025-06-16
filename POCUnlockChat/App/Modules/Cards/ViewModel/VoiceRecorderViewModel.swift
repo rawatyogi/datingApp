@@ -92,11 +92,13 @@ class VoiceRecorderViewModel: ObservableObject {
         
         player.onPlaybackEnded = { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.state = .playbackFinished
-                self.stopPlayback()
-                self.stopWaveformAnimation()
-            }
+               DispatchQueue.main.async {
+                   self.state = .playbackFinished
+                   self.stopWaveformAnimation()
+                   self.playbackTimer?.cancel()
+                   self.elapsedTime = 0
+                   self.isPlaying = false
+               }
         }
     }
     
@@ -158,6 +160,27 @@ class VoiceRecorderViewModel: ObservableObject {
         
         playbackTimer?.cancel()
         playbackTimer = nil
+    }
+    
+    func pausePlayback() {
+        player.pauseAudio()
+        state = .paused
+        stopWaveformAnimation()
+        playbackTimer?.cancel()
+        playbackTimer = nil
+    }
+    
+    func resumePlayback() {
+        player.resumeAudio()
+        state = .playing
+        startWaveformAnimation()
+        
+        playbackTimer = Timer.publish(every: 0.1, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.elapsedTime = self.player.audioPlayer?.currentTime ?? 0
+            }
     }
     
     func deleteRecording(at index: Int) {
