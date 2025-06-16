@@ -8,34 +8,40 @@ import SwiftUI
 
 struct VoiceRecorderView: View {
     
+    //MARK: PROPERTIES
+    var selectedCard: CardsModel
     @State private var selectedIndex = 0
+    @State private var isSubmitted = false
     @State private var userPhotos = [String]()
+    @State private var showSubmissionAlert = false
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel = VoiceRecorderViewModel()
     @StateObject private var audioPlayerManager = AudioPlayerManager()
-   
-    @State private var isSubmitted = false
-    @State private var showSubmissionAlert = false
-    var selectedCard: CardsModel
+    
+    var namespace: Namespace.ID
+    var onDismiss: () -> Void
+    var voiceRecorderScreen: VoiceRecorderScreen = .cards
     
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
                 Color.black.ignoresSafeArea()
                 
-                PhotosCarasoulView(geo: geo, userPhotos: selectedCard.uplaodedImages, selectedIndex: $selectedIndex)
+                PhotosCarasoulView(geo: geo, userPhotos: selectedCard.uplaodedImages, selectedIndex: $selectedIndex, selectedCard: selectedCard, zoomNamespace: namespace)
                 
                 VStack {
                     PageIndicatorView(geo: geo, userPhotos: selectedCard.uplaodedImages, selectedIndex: $selectedIndex)
-                    HeaderView(geo: geo, selectedCard: selectedCard)
+                        .animation(.easeInOut(duration: 0.25), value: selectedIndex)
+                    
+                    HeaderView(geo: geo, selectedCard: selectedCard, voiceRecorderScreen: self.voiceRecorderScreen, onDismiss: onDismiss)
                     Spacer()
                     VStack(spacing: 0) {
                         QuestionaireView(geo: geo, selectedCard: selectedCard)
                         timerAndLineView(geo: geo)
-                            .padding(.top, geo.size.height * 0.06)
+                            .padding(.top, geo.size.height * 0.05)
                         audioControls(geo: geo)
-                            .padding(.top, geo.size.height * 0.06)
-                        UnmatchView(presentationMode: self._presentationMode)
+                            .padding(.top, geo.size.height * 0.03)
+                        UnmatchView(presentationMode: self._presentationMode, voiceRecorderScreen: self.voiceRecorderScreen, onDismiss: onDismiss)
                     }
                     .padding(.bottom, geo.safeAreaInsets.bottom + 30)
                 }
@@ -48,7 +54,14 @@ struct VoiceRecorderView: View {
         }
         .alert("Your recording submitted successfully!", isPresented: $showSubmissionAlert) {
             Button("OK", role: .cancel) {
-                presentationMode.wrappedValue.dismiss()
+                switch self.voiceRecorderScreen {
+                case .cards:
+                    presentationMode.wrappedValue.dismiss()
+                case .matches:
+                    withAnimation(.spring()) {
+                      onDismiss()
+                   }
+                }
             }
         }
         .onDisappear(perform: {
@@ -82,19 +95,28 @@ struct VoiceRecorderView: View {
             Button("Delete") {
                 viewModel.stopRecording()
                 viewModel.cleanupAudioSession()
-                presentationMode.wrappedValue.dismiss()
+                
+                switch self.voiceRecorderScreen {
+                case .cards:
+                    presentationMode.wrappedValue.dismiss()
+                case .matches:
+                    withAnimation(.spring()) {
+                      onDismiss()
+                   }
+                }
+              
             }
             .font(.body)
-            .frame(height: 40.0)
+            .frame(width: 80, height: 40)
+            .animation(.easeInOut(duration: 0.25), value: viewModel.hasStartedRecording)
             .disabled(!viewModel.hasStartedRecording)
             .foregroundColor(viewModel.hasStartedRecording ? .white : Color(hex: "#5C6770"))
+            
           
             ZStack {
-                if !viewModel.isPlaying {
-                    if viewModel.elapsedTime < viewModel.recorder.minDuration {
-                        RecordingProgressView(progress: min(viewModel.elapsedTime / viewModel.recorder.minDuration, 1.0), geo: geo)
-                    }
-                }
+                RecordingProgressView(progress: min(viewModel.elapsedTime / viewModel.recorder.minDuration, 1.0), geo: geo)
+                    .opacity((!viewModel.isPlaying && viewModel.elapsedTime < viewModel.recorder.minDuration) ? 1 : 0)
+                    .animation(.easeInOut(duration: 0.25), value: viewModel.elapsedTime)
                 
                 Button {
 
@@ -136,7 +158,7 @@ struct VoiceRecorderView: View {
                         .clipShape(Circle())
                         .foregroundColor(.white)
                 }
-                .frame(height: 40.0)
+                .frame(width: 80, height: 80)
                 .disabled(viewModel.isRecording && !viewModel.canStopRecording)
                 .opacity(viewModel.isRecording && !viewModel.canStopRecording ? 0.5 : 1)
             }
@@ -148,8 +170,9 @@ struct VoiceRecorderView: View {
             }
             .font(.body)
             .foregroundColor(viewModel.canStopRecording ? .white : Color(hex: "#5C6770"))
-            .frame(height: 40.0)
+            .frame(width: 80, height: 40)
             .disabled(!viewModel.canStopRecording)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: viewModel.canStopRecording)
             
         }
     }
@@ -161,32 +184,45 @@ struct PhotosCarasoulView : View {
     var geo: GeometryProxy
     var userPhotos: [String]
     @Binding var selectedIndex : Int
+    var selectedCard: CardsModel
+    var zoomNamespace: Namespace.ID
     
     var body: some View {
     
         TabView(selection: $selectedIndex) {
             ForEach(0..<userPhotos.count, id: \.self) { index in
-                Image(userPhotos[index])
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: geo.size.width, height: geo.size.height)
-                    .clipped()
-                    .overlay(
-                        LinearGradient(
-                            gradient: Gradient(stops: [
-                                .init(color: Color.black, location: 0.0),
-                                .init(color: Color.black, location: 0.05),
-                                .init(color: Color.black, location: 0.32),
-                                .init(color: Color.black.opacity(0.35), location: 0.45),
-                                .init(color: Color.black.opacity(0.2), location: 0.5)
-                            ]),
-                            startPoint: .bottom,
-                            endPoint: .top
+                GeometryReader { geo in
+                    let minX = geo.frame(in: .global).minX
+                    Image(userPhotos[index])
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+                        .scaleEffect(1 - abs(minX / geo.size.width) * 0.1)
+                        .rotation3DEffect(
+                            .degrees(minX / -20),
+                            axis: (x: 0, y: 1, z: 0)
                         )
-                    )
-                    .ignoresSafeArea()
+                        .overlay(
+                            LinearGradient(
+                                gradient: Gradient(stops: [
+                                    .init(color: Color.black, location: 0.0),
+                                    .init(color: Color.black, location: 0.05),
+                                    .init(color: Color.black, location: 0.32),
+                                    .init(color: Color.black.opacity(0.35), location: 0.45),
+                                    .init(color: Color.black.opacity(0.2), location: 0.5)
+                                ]),
+                                startPoint: .bottom,
+                                endPoint: .top
+                            )
+                        )
+                        .transition(.opacity)
+                        .id(userPhotos[index])
+                        .ignoresSafeArea()
+                }
             }
         }
+        .matchedGeometryEffect(id: "zoom-\(selectedCard.id)", in: zoomNamespace)
         .tabViewStyle(.page(indexDisplayMode: .never))
         .ignoresSafeArea()
     }
@@ -217,14 +253,22 @@ struct HeaderView : View {
     
     var geo: GeometryProxy
     var selectedCard: CardsModel
+    var voiceRecorderScreen: VoiceRecorderScreen
+    var onDismiss: () -> Void
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         HStack {
             
             Button(action: {
-                presentationMode.wrappedValue.dismiss()
-              
+                switch voiceRecorderScreen {
+                case .cards:
+                    presentationMode.wrappedValue.dismiss()
+                case .matches:
+                    withAnimation(.spring()) {
+                      onDismiss()
+                   }
+                }
             }) {
                 Image(systemName: "chevron.left")
                     .font(.title2)
@@ -310,13 +354,24 @@ struct QuestionaireView : View {
 struct UnmatchView : View {
     
     @Environment(\.presentationMode) var presentationMode
+    var voiceRecorderScreen: VoiceRecorderScreen
+    var onDismiss: () -> Void
     
     var body: some View {
         Button("Unmatch") {
-            presentationMode.wrappedValue.dismiss()
+            switch voiceRecorderScreen {
+            case .cards:
+                presentationMode.wrappedValue.dismiss()
+            case .matches:
+                withAnimation(.spring()) {
+                  onDismiss()
+               }
+            }
+           
         }
         .font(.body)
         .foregroundColor(Color(hex: "#BE2020"))
-        .padding(.vertical, 20)
+        .padding(.top, 10)
+        .padding(.bottom, 8)
     }
 }

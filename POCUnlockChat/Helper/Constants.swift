@@ -21,3 +21,8 @@ enum TabType {
     case chats
     case pending
 }
+
+enum VoiceRecorderScreen {
+    case cards
+    case matches
+}

@@ -9,7 +9,7 @@ import Foundation
 
 
 struct CardsModel: Identifiable, Codable, Hashable {
-    var id = ""
+    var id : String
     var age: String
     var name: String
     var imageURL: String

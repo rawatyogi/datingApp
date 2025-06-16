@@ -19,6 +19,8 @@ struct CardsView: View {
 
     @StateObject private var viewModel : ChatsViewModel
  
+    @Namespace var zoomNamespace: Namespace.ID
+    
     init(viewModel: ChatsViewModel = ChatsViewModel()) {
             _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -38,7 +40,7 @@ struct CardsView: View {
                             .padding(.horizontal, 15)
                             .padding(.top, 30)
                         
-                        CardsCollectionView(cards: viewModel.cards, initialAppear: self.$initialAppear)
+                        CardsCollectionView(cards: viewModel.cards, initialAppear: self.$initialAppear, zoomNamespace: zoomNamespace)
                             .padding(.leading, 5)
                             .padding(.top, 18)
                         
@@ -190,12 +192,12 @@ struct UserProfileView : View {
 struct CardsCollectionView : View {
     let cards: [CardsModel]
     @Binding var initialAppear: Bool
-    
+    var zoomNamespace: Namespace.ID
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 8) {
                 ForEach(Array(cards.enumerated()), id: \.element) { index, card in
-                    NavigationLink(destination: VoiceRecorderView(selectedCard: card)) {
+                    NavigationLink(destination: VoiceRecorderView(selectedCard: card, namespace: zoomNamespace, onDismiss: {}, voiceRecorderScreen: .cards)) {
                         UserPhotoView(selectedIndex: index, initialAppear: initialAppear, data: card)
                     }
                 }
