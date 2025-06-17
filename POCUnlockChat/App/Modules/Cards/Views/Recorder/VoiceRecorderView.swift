@@ -105,9 +105,6 @@ struct VoiceRecorderView: View {
     func audioControls(geo: GeometryProxy) -> some View {
         HStack(spacing: geo.size.width * 0.12) {
             Button("Delete") {
-                viewModel.stopRecording()
-                viewModel.cleanupAudioSession()
-                
                 switch self.voiceRecorderScreen {
                 case .cards:
                     presentationMode.wrappedValue.dismiss()
@@ -116,7 +113,6 @@ struct VoiceRecorderView: View {
                       onDismiss()
                    }
                 }
-              
             }
             .font(.body)
             .frame(width: 80, height: 40)
@@ -127,7 +123,7 @@ struct VoiceRecorderView: View {
           
             ZStack {
                 RecordingProgressView(progress: min(viewModel.elapsedTime / viewModel.recorder.minDuration, 1.0), geo: geo)
-                    .opacity((!viewModel.isPlaying && viewModel.elapsedTime < viewModel.recorder.minDuration) ? 1 : 0)
+                    .opacity(viewModel.isRecording ? 1 : 0)
                     .animation(.easeInOut(duration: 0.25), value: viewModel.elapsedTime)
                 
                 Button {
@@ -339,7 +335,7 @@ struct QuestionaireView : View {
                 
                 ZStack {
                     Circle()
-                        .fill(.red)
+                        .fill(.black)
                         .frame(width: geo.size.width * 0.18)
                     Image(self.selectedCard.uplaodedImages.first ?? "")
                         .resizable()
