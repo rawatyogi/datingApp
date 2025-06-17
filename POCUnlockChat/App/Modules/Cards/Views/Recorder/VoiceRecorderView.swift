@@ -14,6 +14,7 @@ struct VoiceRecorderView: View {
     @State private var isSubmitted = false
     @State private var userPhotos = [String]()
     @State private var showSubmissionAlert = false
+    @State private var showPermissionAlert = false
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel = VoiceRecorderViewModel()
     @StateObject private var audioPlayerManager = AudioPlayerManager()
@@ -63,6 +64,17 @@ struct VoiceRecorderView: View {
                    }
                 }
             }
+        }
+        .alert("Microphone Access Needed", isPresented: $showPermissionAlert) {
+            Button("Go to Settings") {
+                if let url = URL(string: UIApplication.openSettingsURLString),
+                   UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Please enable microphone access in Settings to use voice recording features.")
         }
         .onDisappear(perform: {
             viewModel.cleanupAudioSession()
@@ -119,37 +131,43 @@ struct VoiceRecorderView: View {
                     .animation(.easeInOut(duration: 0.25), value: viewModel.elapsedTime)
                 
                 Button {
-
-                    switch viewModel.state {
+                    viewModel.requestMicrophonePermission { granted in
                         
-                    case .readyToRecording:
-                        viewModel.startRecording()
-                        viewModel.updateWaveform()
-                        debugPrint("Start recording")
-                        
-                    case .recording:
-                        if viewModel.canStopRecording {
-                            viewModel.stopRecording()
+                        if granted {
+                            switch viewModel.state {
+                                
+                            case .readyToRecording:
+                                viewModel.startRecording()
+                                viewModel.updateWaveform()
+                                debugPrint("Start recording")
+                                
+                            case .recording:
+                                if viewModel.canStopRecording {
+                                    viewModel.stopRecording()
+                                }
+                                debugPrint("Stop recording")
+                                
+                            case .recordingFinished:
+                                viewModel.startPlayback()
+                                debugPrint("Recording finished")
+                                
+                            case .playing:
+                                viewModel.pausePlayback()
+                                debugPrint("Pause Playback")
+                                
+                            case .paused:
+                                viewModel.resumePlayback()
+                                debugPrint("Playback pauesd")
+                                
+                            case .playbackFinished:
+                                viewModel.startPlayback()
+                                debugPrint("Playback finished")
+                            }
+                        } else {
+                            showPermissionAlert = true
                         }
-                        debugPrint("Stop recording")
-                        
-                    case .recordingFinished:
-                        viewModel.startPlayback()
-                        debugPrint("Recording finished")
-                        
-                    case .playing:
-                        viewModel.pausePlayback()
-                        debugPrint("Pause Playback")
-                        
-                    case .paused:
-                        viewModel.resumePlayback()
-                        debugPrint("Playback pauesd")
-                        
-                    case .playbackFinished:
-                        viewModel.startPlayback()
-                        debugPrint("Playback finished")
                     }
-                    
+                   
                 } label: {
                     Image(viewModel.iconName)
                         .resizable()
@@ -165,7 +183,7 @@ struct VoiceRecorderView: View {
             
             
             Button("Submit") {
-                viewModel.stopRecording()
+                viewModel.cleanupAudioSession()
                 showSubmissionAlert = true
             }
             .font(.body)
@@ -208,7 +226,7 @@ struct PhotosCarasoulView : View {
                                 gradient: Gradient(stops: [
                                     .init(color: Color.black, location: 0.0),
                                     .init(color: Color.black, location: 0.05),
-                                    .init(color: Color.black, location: 0.32),
+                                    .init(color: Color.black, location: 0.2),
                                     .init(color: Color.black.opacity(0.35), location: 0.45),
                                     .init(color: Color.black.opacity(0.2), location: 0.5)
                                 ]),

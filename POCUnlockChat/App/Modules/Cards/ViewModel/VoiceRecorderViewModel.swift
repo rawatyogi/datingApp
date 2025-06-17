@@ -7,9 +7,11 @@
 
 import Combine
 import Foundation
+import AVFAudio
 
 class VoiceRecorderViewModel: ObservableObject {
     
+    //MARK: PROPERTIES
     @Published var recordedURL: URL?
     @Published var recordings: [URL] = []
     @Published var audioLevel: Float = 1.0
@@ -108,6 +110,7 @@ class VoiceRecorderViewModel: ObservableObject {
         stopWaveformAnimation()
     }
     
+    //MARK: STRAT AUDIO RECORDING
     func startRecording() {
         guard state != .playing else { return }
         recorder.startAudioRecording()
@@ -118,6 +121,7 @@ class VoiceRecorderViewModel: ObservableObject {
         hasStartedRecording = true
     }
     
+    //MARK: STOP RECORDING
     func stopRecording() {
         guard canStopRecording else { return }
         recorder.stopRecording()
@@ -126,8 +130,9 @@ class VoiceRecorderViewModel: ObservableObject {
         stopWaveformAnimation()
     }
     
+    //MARK: CLEAN UP AUDIO SETUP
     func cleanupAudioSession() {
-        stopRecording()
+       
         player.stopAudio()
         recorder.stopRecording()
         stopProgressTimer()
@@ -138,6 +143,7 @@ class VoiceRecorderViewModel: ObservableObject {
         recordedURL = nil
     }
     
+    //MARK: SATRT AUDIO
     func startPlayback() {
         guard let url = recordedURL else { return }
         player.playAudio(url: url)
@@ -153,6 +159,7 @@ class VoiceRecorderViewModel: ObservableObject {
             }
     }
     
+    //MARK: STOP AUDIO , IF REQUIRED
     func stopPlayback() {
         player.stopAudio()
         state = .paused
@@ -162,6 +169,7 @@ class VoiceRecorderViewModel: ObservableObject {
         playbackTimer = nil
     }
     
+    //MARK: PAUSE THE AUDIO
     func pausePlayback() {
         player.pauseAudio()
         state = .paused
@@ -170,6 +178,7 @@ class VoiceRecorderViewModel: ObservableObject {
         playbackTimer = nil
     }
     
+    //MARK: REUMSE PLATYING AUDIO
     func resumePlayback() {
         player.resumeAudio()
         state = .playing
@@ -183,12 +192,14 @@ class VoiceRecorderViewModel: ObservableObject {
             }
     }
     
+    //MARK: DELETE A RECORDING WHEN REQUIRED (currently optional)
     func deleteRecording(at index: Int) {
         let url = recordings[index]
         try? FileManager.default.removeItem(at: url)
         recordings.remove(at: index)
     }
     
+    //MARK: UDPATE WAVE ANIMATION BASED ON CERTAIN CONDITIONS
     func updateWaveform() {
         switch state {
         case .recording:
@@ -201,10 +212,12 @@ class VoiceRecorderViewModel: ObservableObject {
         }
     }
     
+    //MARK: RESET BARS
     func resetWaveform() {
         barHeights = Array(repeating: 5, count: 20)
     }
     
+    //MARK: START TIMER FOR PROHRESS
     private func startProgressTimer() {
         stopProgressTimer()
         var elapsed = 0.0
@@ -218,11 +231,13 @@ class VoiceRecorderViewModel: ObservableObject {
         }
     }
     
+    //MARK: STOP GARDEINT RECORDRER PROGRESS
     private func stopProgressTimer() {
         progressTimer?.invalidate()
         progressTimer = nil
     }
     
+    //MARK: START WAVE ANIMATION
     private func startWaveformAnimation() {
         stopWaveformAnimation()
         waveformTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
@@ -230,9 +245,30 @@ class VoiceRecorderViewModel: ObservableObject {
         }
     }
     
+    //MARK: STOP WAVE ANIMATION
     private func stopWaveformAnimation() {
         waveformTimer?.invalidate()
         waveformTimer = nil
         resetWaveform()
     }
+    
+    //MARK: CEHCK  MICROPHONE USAGE PERMISSION
+    func requestMicrophonePermission(completion: @escaping (Bool) -> Void) {
+        let audioSession = AVAudioSession.sharedInstance()
+        switch audioSession.recordPermission {
+        case .undetermined:
+            audioSession.requestRecordPermission { granted in
+                DispatchQueue.main.async {
+                    completion(granted)
+                }
+            }
+        case .granted:
+            completion(true)
+        case .denied:
+            completion(false)
+        @unknown default:
+            completion(false)
+        }
+    }
+
 }

@@ -9,15 +9,18 @@ import Foundation
 import AVFoundation
 import Combine
 
-class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
+class AudioPlayerManager: NSObject, ObservableObject {
+    
+    //MARK: PROPERTIES
+    var audioPlayer: AVAudioPlayer?
+    var onPlaybackEnded: (() -> Void)?
+    private var timer: AnyCancellable?
+    
     @Published var isPlaying = false
     @Published var currentTime: TimeInterval = 0
     @Published var duration: TimeInterval = 0
     
-    private var timer: AnyCancellable?
-    var audioPlayer: AVAudioPlayer?
-    var onPlaybackEnded: (() -> Void)?
-    
+    //MARK: PLAY AUDIO
     func playAudio(url: URL) {
         stopAudio()
         
@@ -43,6 +46,7 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    //MARK: PAUSE AUDIO PLAYBACK
     func pauseAudio() {
         audioPlayer?.pause()
         stopTimer()
@@ -51,6 +55,7 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    //MARK: STOP AUDIO
     func stopAudio() {
         audioPlayer?.stop()
         stopTimer()
@@ -62,6 +67,7 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     
+    //MARK: RESUME AUDIO PLAYBACK
     func resumeAudio() {
         guard let player = audioPlayer, !player.isPlaying else { return }
         player.play()
@@ -70,7 +76,8 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
             self.isPlaying = true
         }
     }
-    
+  
+    //MARK: START TIMER FOR AUDIO
     private func startTimer() {
         stopTimer()
       
@@ -83,11 +90,16 @@ class AudioPlayerManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
                 }
             }
     }
-    
+   
+    //MARK: CANCEL TIMER FOR AUDIO
     private func stopTimer() {
         timer?.cancel()
         timer = nil
     }
+}
+
+//MARK: AUDIO FINISHED PLAYING CALLBACK
+extension AudioPlayerManager: AVAudioPlayerDelegate{
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         self.isPlaying = false

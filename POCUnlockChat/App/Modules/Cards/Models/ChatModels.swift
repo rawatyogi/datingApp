@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct CardsModel: Identifiable, Codable, Hashable {
     var id : String
     var age: String

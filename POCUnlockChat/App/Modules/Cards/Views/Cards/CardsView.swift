@@ -196,6 +196,8 @@ struct CardsCollectionView : View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 8) {
+                
+                //dimiss completio is for animtion copy versionit has nothing to do here
                 ForEach(Array(cards.enumerated()), id: \.element) { index, card in
                     NavigationLink(destination: VoiceRecorderView(selectedCard: card, namespace: zoomNamespace, onDismiss: {}, voiceRecorderScreen: .cards)) {
                         UserPhotoView(selectedIndex: index, initialAppear: initialAppear, data: card)

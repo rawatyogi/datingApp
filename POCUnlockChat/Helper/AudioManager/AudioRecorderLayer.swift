@@ -9,25 +9,24 @@ import Foundation
 import AVFoundation
 import Combine
 
-class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
+class AudioRecorderLayer: NSObject, ObservableObject {
     
-    // PROPERTIES
+    //MARK: PROPERTIES
+    @Published var recordedURL: URL?
+    @Published var isRecording = false
+    @Published var audioLevel: Float = 0.0
+    @Published var elapsedTime: TimeInterval = 0
+    @Published var didFinishMaxRecording = false
+    @Published var recordingSuccess: Bool = false
+
+    let minDuration: TimeInterval = 15
+    let maxDuration: TimeInterval = 1 * 60
+    var onRecordingFinished: (() -> Void)?
+    private var cancellable: AnyCancellable?
     private var audioRecorder: AVAudioRecorder?
     private let session = AVAudioSession.sharedInstance()
-    
-    @Published var isRecording = false
-    @Published var recordedURL: URL?
-    @Published var elapsedTime: TimeInterval = 0
-    @Published var recordingSuccess: Bool = false
-    @Published var audioLevel: Float = 0.0
-    @Published var didFinishMaxRecording = false
-    
-    private var cancellable: AnyCancellable?
-    
-    let maxDuration: TimeInterval = 1 * 60
-    let minDuration: TimeInterval = 15
-    var onRecordingFinished: (() -> Void)?
 
+    //MARK: START AUDIO RECORDING
     func startAudioRecording() {
         stopRecording()
         do {
@@ -57,10 +56,11 @@ class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
             isRecording = true
             startTimer()
         } catch {
-            print("Recording failed2: \(error.localizedDescription)")
+            debugPrint("Recording failed2: \(error.localizedDescription)")
         }
     }
     
+    //MARK: START TIMER
     private func startTimer() {
         elapsedTime = 0
         cancellable = Timer.publish(every: 0.05, on: .main, in: .common)
@@ -81,11 +81,11 @@ class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
             }
     }
 
-    
+    //MARK: STOP RECORDING
     func stopRecording() {
         audioRecorder?.stop()
         onRecordingFinished?()
-        print("Audio file saved at: \(audioRecorder?.url)")
+        print("Audio file saved at: \(String(describing: audioRecorder?.url))")
         print("File exists: \(FileManager.default.fileExists(atPath: audioRecorder?.url.path.description ?? ""))")
 
         cancellable?.cancel()
@@ -93,7 +93,8 @@ class AudioRecorderLayer: NSObject, ObservableObject, AVAudioRecorderDelegate {
     }
 }
 
-extension AudioRecorderLayer {
+//MARK: AUDIO PLAYER DELEGATE
+extension AudioRecorderLayer: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         print(flag ? "Audio recorded successfully" : "Recording failed1")
         recordingSuccess = flag
