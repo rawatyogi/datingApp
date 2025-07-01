@@ -27,27 +27,28 @@ struct VoiceRecorderView: View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
                 Color.black.ignoresSafeArea()
-                
-                PhotosCarasoulView(geo: geo, userPhotos: selectedCard.uplaodedImages, selectedIndex: $selectedIndex, selectedCard: selectedCard, zoomNamespace: namespace)
-                
-                VStack {
-                    PageIndicatorView(geo: geo, userPhotos: selectedCard.uplaodedImages, selectedIndex: $selectedIndex)
-                        .animation(.easeInOut(duration: 0.25), value: selectedIndex)
+                ZStack(alignment: .bottom) {
                     
-                    HeaderView(geo: geo, selectedCard: selectedCard, voiceRecorderScreen: self.voiceRecorderScreen, onDismiss: onDismiss)
-                    Spacer()
-                    VStack(spacing: 0) {
-                        QuestionaireView(geo: geo, selectedCard: selectedCard)
-                        timerAndLineView(geo: geo)
-                            .padding(.top, geo.size.height * 0.05)
-                        audioControls(geo: geo)
-                            .padding(.top, geo.size.height * 0.03)
-                        UnmatchView(presentationMode: self._presentationMode, voiceRecorderScreen: self.voiceRecorderScreen, onDismiss: onDismiss)
+                    PhotosCarasoulView(geo: geo, userPhotos: selectedCard.uplaodedImages, selectedIndex: $selectedIndex, selectedCard: selectedCard, zoomNamespace: namespace)
+                    VStack {
+                        PageIndicatorView(geo: geo, userPhotos: selectedCard.uplaodedImages, selectedIndex: $selectedIndex)
+                            .animation(.easeInOut(duration: 0.25), value: selectedIndex)
+                        
+                        HeaderView(geo: geo, selectedCard: selectedCard, voiceRecorderScreen: self.voiceRecorderScreen, onDismiss: onDismiss)
+                        Spacer()
+                        VStack(spacing: 0) {
+                            QuestionaireView(geo: geo, selectedCard: selectedCard)
+                            timerAndLineView(geo: geo)
+                                .padding(.top, geo.size.height * 0.05)
+                            audioControls(geo: geo)
+                                .padding(.top, geo.size.height * 0.03)
+                            UnmatchView(presentationMode: self._presentationMode, voiceRecorderScreen: self.voiceRecorderScreen, onDismiss: onDismiss)
+                        }
+                        .padding(.bottom, geo.safeAreaInsets.bottom + 30)
                     }
-                    .padding(.bottom, geo.safeAreaInsets.bottom + 30)
+                    .padding(.horizontal, 15)
+                    .padding(.top, geo.size.height * 0.05)
                 }
-                .padding(.horizontal, 15)
-                .padding(.top, geo.size.height * 0.05)
             }
             .onAppear {
                 self.userPhotos = self.selectedCard.uplaodedImages
@@ -93,11 +94,17 @@ struct VoiceRecorderView: View {
                 .font(.footnote)
                 .foregroundColor(Color(hex: "#AEADAF"))
             
-            let isActive = viewModel.isRecording || viewModel.isPlaying
-            WaveformView(isRecording: viewModel.isRecording, isPlaying: viewModel.isPlaying, barHeights: viewModel.barHeights, isActive: isActive)
-                .frame(height: 30)
-                .padding(.horizontal, geo.size.width * 0.1)
-            
+            WaveformView(
+                isRecording: viewModel.isRecording,
+                isPlaying: viewModel.isPlaying,
+                barHeights: viewModel.barHeights,
+                progress: viewModel.playbackProgress,
+                state: viewModel.state,
+                onSeek: { newProgress in
+                    viewModel.seekToProgress(newProgress)
+                }
+            )
+            .padding(.horizontal, geo.size.width * 0.1)
         }
     }
     

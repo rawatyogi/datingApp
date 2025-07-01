@@ -30,6 +30,8 @@ class VoiceRecorderViewModel: ObservableObject {
     @Published var isRecordingCompleted: Bool = false
     @Published var didFinishMaxRecording: Bool = false
 
+    @Published var playbackProgress: Double = 0.0
+
     let player = AudioPlayerManager()
     let recorder = AudioRecorderLayer()
     var onRecordingFinished: (() -> Void)?
@@ -96,9 +98,9 @@ class VoiceRecorderViewModel: ObservableObject {
             guard let self = self else { return }
                DispatchQueue.main.async {
                    self.state = .playbackFinished
-                   self.stopWaveformAnimation()
-                   self.playbackTimer?.cancel()
-                   self.elapsedTime = 0
+                  // self.stopWaveformAnimation()
+                  // self.playbackTimer?.cancel()
+                   //self.elapsedTime = 0
                    self.isPlaying = false
                }
         }
@@ -141,6 +143,8 @@ class VoiceRecorderViewModel: ObservableObject {
         state = .readyToRecording
         canStopRecording = false
         recordedURL = nil
+        playbackProgress = 0.0
+
     }
     
     //MARK: SATRT AUDIO
@@ -151,11 +155,12 @@ class VoiceRecorderViewModel: ObservableObject {
         self.isPlaying = true
         startWaveformAnimation()
         
-        playbackTimer = Timer.publish(every: 0.1, on: .main, in: .common)
+        playbackTimer = Timer.publish(every: 0.05, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.elapsedTime = self.player.audioPlayer?.currentTime ?? 0
+                guard let self = self, let player = self.player.audioPlayer else { return }
+                self.elapsedTime = player.currentTime
+                self.playbackProgress = player.duration > 0 ? player.currentTime / player.duration : 0
             }
     }
     
@@ -167,15 +172,16 @@ class VoiceRecorderViewModel: ObservableObject {
         
         playbackTimer?.cancel()
         playbackTimer = nil
+        playbackProgress = 0.0
     }
     
     //MARK: PAUSE THE AUDIO
     func pausePlayback() {
         player.pauseAudio()
         state = .paused
-        stopWaveformAnimation()
-        playbackTimer?.cancel()
-        playbackTimer = nil
+        //stopWaveformAnimation()
+        //playbackTimer?.cancel()
+       // playbackTimer = nil
     }
     
     //MARK: REUMSE PLATYING AUDIO
@@ -184,12 +190,14 @@ class VoiceRecorderViewModel: ObservableObject {
         state = .playing
         startWaveformAnimation()
         
-        playbackTimer = Timer.publish(every: 0.1, on: .main, in: .common)
+        playbackTimer = Timer.publish(every: 0.05, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.elapsedTime = self.player.audioPlayer?.currentTime ?? 0
+                guard let self = self, let player = self.player.audioPlayer else { return }
+                self.elapsedTime = player.currentTime
+                self.playbackProgress = player.duration > 0 ? player.currentTime / player.duration : 0
             }
+
     }
     
     //MARK: DELETE A RECORDING WHEN REQUIRED (currently optional)
@@ -269,6 +277,14 @@ class VoiceRecorderViewModel: ObservableObject {
         @unknown default:
             completion(false)
         }
+    }
+    
+    func seekToProgress(_ progress: Double) {
+        guard let player = player.audioPlayer else { return }
+        let newTime = progress * player.duration
+        player.currentTime = newTime
+        elapsedTime = newTime
+        playbackProgress = progress
     }
 
 }
