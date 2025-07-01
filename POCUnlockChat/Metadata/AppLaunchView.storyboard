@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,17 +16,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashNew" translatesAutoresizingMaskIntoConstraints="NO" id="fTb-M0-qto">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Splash" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUW-xn-6fV">
+                                <rect key="frame" x="141" y="417.66666666666669" width="111.33333333333331" height="42"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="0.81176470588235294" green="0.81176470588235294" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="fTb-M0-qto" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="5si-v7-u49"/>
-                            <constraint firstAttribute="bottom" secondItem="fTb-M0-qto" secondAttribute="bottom" id="8fi-fu-qVs"/>
-                            <constraint firstItem="fTb-M0-qto" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="8zd-nV-IB9"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="fTb-M0-qto" secondAttribute="trailing" id="Khd-xI-MiN"/>
+                            <constraint firstItem="vUW-xn-6fV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="12" id="FcS-YD-EB5"/>
+                            <constraint firstItem="vUW-xn-6fV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Bcu-3y-fUS" secondAttribute="top" constant="12" id="MfV-wG-EFx"/>
+                            <constraint firstItem="vUW-xn-6fV" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="bH9-pJ-7Lt"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="vUW-xn-6fV" secondAttribute="bottom" constant="12" id="i3I-0J-Mes"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vUW-xn-6fV" secondAttribute="trailing" constant="12" id="sWo-bx-THi"/>
+                            <constraint firstItem="vUW-xn-6fV" firstAttribute="centerY" secondItem="Bcu-3y-fUS" secondAttribute="centerY" id="wgo-Sv-aLZ"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -34,7 +40,4 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="SplashNew" width="341.33334350585938" height="341.33334350585938"/>
-    </resources>
 </document>

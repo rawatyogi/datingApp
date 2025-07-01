@@ -331,7 +331,7 @@ struct QuestionaireView : View {
             
             VStack(spacing: -geo.size.height * 0.11) {
                 
-                Text("Stroll question")
+                Text("Date question")
                     .font(.caption)
                     .fontWeight(.medium)
                     .foregroundColor(Color(hex: "#FFFFFF"))
